@@ -1,31 +1,39 @@
-# import time
+import requests 
+from bs4 import BeautifulSoup as bs
 
 
-# a= [1,2,3,4,3,3,4,5,2,2,22,534]
-# 单数= []
-# 双数= []
+url= 'http://www.jiche.com/Ducati/chexing.html'
+# print(url)
+header= {
+    'Referer': 'http://www.jiche.com/Ducati/chexing.html',
+    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
+    }
+# def get_url():
+#     try:
+#         response = requests.get(url)
+#     except Exception:
+#         pass
+#     html = response.text
+#     # print(html)
+#     soup= bs(html,'lxml')
+#     motors= soup.find(class_='list-txt').find_all('a')
+#     # print(motors)
+#     motor_list= []
+#     for motor in motors:
+#         m= motor.get('href')
+#         motor_list.append(m)
 
-# for i in a :
-#     if i%2==0:
-#         双数.append(i)
-#         print(f'现在的双数有{len(双数)} 个。')
-#         time.sleep(1)
-#     else:
-#         单数.append(i)
-#         print(f'现在的单数有{len(单数)} 个。') 
-#         time.sleep(1)
+#     return motor_list
+# url_list= get_url()
+# print(url_list)
 
+def motor_data(url):
+    # for m_url in url:
+    http= requests.get(url,headers=header)
+    html= http.text
+    soup= bs(html,'lxml')
+    
+    all= soup.find(class_="customtable j-model")
+    print(all.text)
 
-# for i in range(10):
-#     print(i)
-lst= list(range(1,10))
-lst2= 1
-
-while lst2 < 10:
-    for i in lst:
-        print(f'{lst2}乘{i}得：',i*lst2)
-        
-
-    lst2+=1
-
-# print(len(lst))
+motor_data('http://www.jiche.com/Ducati/Monster696')
